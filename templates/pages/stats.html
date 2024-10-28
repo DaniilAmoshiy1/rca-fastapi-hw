@@ -9,42 +9,17 @@
         <div class="card-title">
             <p>Here are the votes! Refresh to see updates.</p>
             <p><b>Last refresh:</b> {{ current_date }}</p>
-        </div>
-        <div class="card">
-            <img src="static/images/happy.png" alt="Image 1">
-            <div class="card-content">
-                <p>Happy - 7 / 18 votes</p>
-                <div class="bar-container">
-                    <div class="bar" style="width: 100%;"></div>
+         </div>
+        {% for card_id, votes in votes %}
+            <div class="card">
+                <img src="static/images/{{ card_id }}.png" alt="{{ card_id }} cat">
+                <div class="card-content">
+                    <p>{{ card_id.capitalize() }} - {{ votes }} / {{ total_votes }} votes</p>
+                    <div class="bar-container">
+                        <div class="bar" style="width: {{ (votes / total_votes) * 100 if total_votes > 0 else 0 }}%;"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card">
-            <img src="static/images/thinking.png" alt="Image 1">
-            <div class="card-content">
-                <p>Thinking - 5 / 18 votes</p>
-                <div class="bar-container">
-                    <div class="bar" style="width: 71%;"></div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <img src="static/images/crying.png" alt="Image 1">
-            <div class="card-content">
-                <p>Crying - 4 / 18 votes</p>
-                <div class="bar-container">
-                    <div class="bar" style="width: 57%;"></div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <img src="static/images/meow.png" alt="Image 1">
-            <div class="card-content">
-                <p>Meow - 2 / 18 votes</p>
-                <div class="bar-container">
-                    <div class="bar" style="width: 29%;"></div>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 {% endblock %}

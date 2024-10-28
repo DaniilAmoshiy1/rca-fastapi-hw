@@ -21,6 +21,7 @@ votes_storage: dict[str, int] = {
 }
 
 
+
 class Vote(BaseModel):
     card_id: str
 
@@ -53,7 +54,7 @@ def get_choice(request: Request):
                 'image': 'crying.png',
                 'alt': 'crying cat',
                 'description': "Life's not fair! Too many homeworks! I have paws, goddammit!"
-            }
+            },
         ]
     }
     return templates.TemplateResponse("pages/choice.html", data)
@@ -61,9 +62,8 @@ def get_choice(request: Request):
 
 @app.post('/vote')
 def count_vote(vote: Vote):
-
     votes_storage[vote.card_id] += 1
-    print(votes_storage)
+
     print(f"Vote received for card ID: {vote.card_id}")
     return RedirectResponse(url='/stats', status_code=303)
 
@@ -71,9 +71,13 @@ def count_vote(vote: Vote):
 @app.get('/stats')
 def get_stats(request: Request):
     current_time = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+    total_votes = sum(votes_storage.values())
+    sorted_votes = sorted(votes_storage.items(), key=lambda x: x[1], reverse=True)
     data = {
         'request': request,
         'current_date': current_time,
+        'votes': sorted_votes,
+        'total_votes': total_votes,
     }
     return templates.TemplateResponse("pages/stats.html", data)
 
