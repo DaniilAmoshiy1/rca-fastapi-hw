@@ -9,29 +9,13 @@
         <div class="card-title">
             <p>Choose what kitty you are today!</p>
         </div>
-        <div class="card" onclick="castVote('happy')">
-            <img src="{{ url_for('static', path='/images/happy.png') }}" alt="happy cat">
+        {% for cat in cats %}
+        <div class="card" onclick="castVote('{{ cat.id }}')">
+            <img src="{{ url_for('static', path='/images/' + cat.image) }}" alt="{{ cat.alt }}">
             <div class="card-content">
-                <p>I am a happy kitty, purring like there is no tomorrow!</p>
+                <p>{{ cat.description }}</p>
             </div>
         </div>
-        <div class="card" onclick="castVote('meow')">
-            <img src="{{ url_for('static', path='/images/meow.png') }}" alt="meow cat">
-            <div class="card-content">
-                <p>Meowing, energetic, wanna do stuff and run everywhere!</p>
-            </div>
-        </div>
-        <div class="card" onclick="castVote('thinking')">
-            <img src="{{ url_for('static', path='/images/thinking.png') }}" alt="thinking cat">
-            <div class="card-content">
-                <p>I am a feline of thinking. Ever observating and making conclusions.</p>
-            </div>
-        </div>
-        <div class="card" onclick="castVote('crying')">
-            <img src="{{ url_for('static', path='/images/crying.png') }}" alt="crying cat">
-            <div class="card-content">
-                <p>Life's not fair! Too many homeworks! I have paws, goddammit!</p>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 {% endblock %}
